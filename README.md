@@ -2,6 +2,7 @@
 
 ![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
 ![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-1.3%2B-orange.svg)
+![XGBoost](https://img.shields.io/badge/XGBoost-3.4%2B-red.svg)
 ![Jupyter](https://img.shields.io/badge/Jupyter-Notebook-F37626.svg)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 ![Internship](https://img.shields.io/badge/Datheon-Internship-blueviolet.svg)
@@ -59,6 +60,27 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 │   ├── generate_visualizations.py             # Benchmark generation script
 │   └── README.md                              # Dedicated Task 2 documentation
 │
+├── Task_3_Customer_Churn_Classification/       # [COMPLETED]
+│   ├── dataset/
+│   │   └── Telco-Customer-Churn.csv           # Official IBM Telco Customer Churn dataset
+│   ├── notebooks/
+│   │   └── customer_churn_prediction.ipynb    # Fully executed 26-section classification notebook
+│   ├── images/                                # 8 publication-grade visualizations
+│   │   ├── churn_distribution.png
+│   │   ├── correlation_heatmap.png
+│   │   ├── roc_curve_comparison.png
+│   │   ├── random_forest_confusion_matrix.png
+│   │   ├── xgboost_confusion_matrix.png
+│   │   ├── random_forest_feature_importance.png
+│   │   ├── xgboost_feature_importance.png
+│   │   └── model_comparison.png
+│   ├── src/
+│   │   └── preprocessing.py                   # Reusable preprocessing & evaluation module
+│   ├── generate_visualizations.py             # Benchmark generation script
+│   ├── build_notebook.py                      # Automated notebook generator script
+│   ├── requirements.txt                       # Task-specific dependencies
+│   └── README.md                              # Dedicated Task 3 documentation
+│
 ├── Task_4_Sentiment_Analysis/                 # [PENDING / PLANNED]
 │   └── .gitkeep                               # Reserved for Task 4 implementation
 │
@@ -75,6 +97,7 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 | :---: | :--- | :--- | :---: | :--- |
 | **Task 1** | **Multi-Class Benchmark Classification Pipeline** | Scikit-Learn Pipelines, StandardScaler, Logistic Regression, Decision Tree Classifier, Confusion Matrices, PCA 2D Visualization | **✅ Completed** | [Task_1_Classification](./Task_1_Classification/) |
 | **Task 2** | **Real Estate Housing Price Prediction** | Ridge & Lasso Regression, L1/L2 Regularization, Multicollinearity (VIF), Feature Engineering, Residual Diagnostics | **✅ Completed** | [Task_2_Housing_Price_Prediction](./Task_2_Housing_Price_Prediction/) |
+| **Task 3** | **Predictive Customer Churn Classification** | Random Forest, XGBoost, Class Imbalance Handling (SMOTE & Class Weights), ROC-AUC Optimization, Feature Importance | **✅ Completed** | [Task_3_Customer_Churn_Classification](./Task_3_Customer_Churn_Classification/) |
 | **Task 4** | **NLP Sentiment Classification on Customer Reviews** | TF-IDF Vectorization, Text Preprocessing, Sentiment Analysis Classifiers | **⏳ Pending** | [Task_4_Sentiment_Analysis](./Task_4_Sentiment_Analysis/) |
 
 ---
@@ -109,6 +132,20 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 
 ---
 
+## 🌟 Task 3 Highlights: Predictive Customer Churn Classification
+
+- **Dataset:** Official IBM Telco Customer Churn Dataset (7,043 subscriber records, 21 attributes, 26.54% empirical churn rate).
+- **Class Imbalance Resolution:** Solved 2.77:1 majority-to-minority imbalance using cost-sensitive learning (`class_weight='balanced'` in Random Forest and `scale_pos_weight` in XGBoost) within atomic `ColumnTransformer` pipelines.
+- **Data Cleaning & Pipeline:** Imputed 11 new-account whitespace strings in `TotalCharges` (`tenure = 0` to 0.0), excluded `customerID`, standard-scaled numerical attributes, and one-hot encoded 16 categorical predictors without test leakage.
+- **Benchmark Results (20% Holdout Test - 1,409 Subscribers):**
+  - **XGBoost Classifier (Tuned):** **Champion ROC-AUC = 0.8460**, **Accuracy = 80.55%**, **Precision = 67.48%**, F1-Score = **0.5848** (Max Discrimination & Precision).
+  - **Random Forest Classifier (Tuned):** **Test ROC-AUC = 0.8415**, **Recall = 79.14%**, Accuracy = **73.95%**, Precision = **50.60%**, F1-Score = **0.6173** (Champion Retention: captures ~80% of churning subscribers).
+- **Core Churn Drivers Identified:** `Contract_Month-to-month` (42.7% segment churn rate), low `tenure` (first 12 months critical), `InternetService_Fiber optic` (41.9% churn rate), `PaymentMethod_Electronic check` (45.3% churn rate), and absence of `OnlineSecurity` / `TechSupport`.
+
+👉 **For complete methodology, figures, and classification reports, see [Task 3 README](./Task_3_Customer_Churn_Classification/README.md).**
+
+---
+
 ## ⚙️ Environment Setup & Installation
 
 ### 1. Prerequisites
@@ -140,8 +177,11 @@ python Task_1_Classification/generate_pipeline.py
 # Execute Task 2 visualization and benchmark script
 python Task_2_Housing_Price_Prediction/generate_visualizations.py
 
-# Launch Jupyter Notebook
-jupyter notebook Task_2_Housing_Price_Prediction/notebooks/housing_price_prediction.ipynb
+# Execute Task 3 visualization and benchmark script
+python Task_3_Customer_Churn_Classification/generate_visualizations.py
+
+# Launch Jupyter Notebooks
+jupyter notebook Task_3_Customer_Churn_Classification/notebooks/customer_churn_prediction.ipynb
 ```
 
 ---
