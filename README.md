@@ -40,8 +40,24 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 │   ├── generate_pipeline.py                   # Automated pipeline script
 │   └── README.md                              # Dedicated Task 1 documentation
 │
-├── Task_2_Housing_Price_Prediction/           # [PENDING / PLANNED]
-│   └── .gitkeep                               # Reserved for Task 2 implementation
+├── Task_2_Housing_Price_Prediction/           # [COMPLETED]
+│   ├── dataset/
+│   │   └── california_housing.csv             # Official California Housing Census dataset
+│   ├── notebooks/
+│   │   └── housing_price_prediction.ipynb     # Fully executed 21-section regression notebook
+│   ├── images/                                # 8 publication-grade visualizations
+│   │   ├── target_distribution.png
+│   │   ├── correlation_heatmap.png
+│   │   ├── vif_analysis.png
+│   │   ├── model_comparison.png
+│   │   ├── actual_vs_predicted.png
+│   │   ├── residual_distribution.png
+│   │   ├── residuals_vs_predicted.png
+│   │   └── regularization_coefficients.png
+│   ├── src/
+│   │   └── preprocessing.py                   # Reusable transformer & utility module
+│   ├── generate_visualizations.py             # Benchmark generation script
+│   └── README.md                              # Dedicated Task 2 documentation
 │
 ├── Task_4_Sentiment_Analysis/                 # [PENDING / PLANNED]
 │   └── .gitkeep                               # Reserved for Task 4 implementation
@@ -58,7 +74,7 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 | Task | Title | Key Algorithms & Methods | Status | Directory Link |
 | :---: | :--- | :--- | :---: | :--- |
 | **Task 1** | **Multi-Class Benchmark Classification Pipeline** | Scikit-Learn Pipelines, StandardScaler, Logistic Regression, Decision Tree Classifier, Confusion Matrices, PCA 2D Visualization | **✅ Completed** | [Task_1_Classification](./Task_1_Classification/) |
-| **Task 2** | **Real Estate Housing Price Prediction** | Ridge & Lasso Regression, Regularization, Cross-Validation, Feature Engineering | **⏳ Pending** | [Task_2_Housing_Price_Prediction](./Task_2_Housing_Price_Prediction/) |
+| **Task 2** | **Real Estate Housing Price Prediction** | Ridge & Lasso Regression, L1/L2 Regularization, Multicollinearity (VIF), Feature Engineering, Residual Diagnostics | **✅ Completed** | [Task_2_Housing_Price_Prediction](./Task_2_Housing_Price_Prediction/) |
 | **Task 4** | **NLP Sentiment Classification on Customer Reviews** | TF-IDF Vectorization, Text Preprocessing, Sentiment Analysis Classifiers | **⏳ Pending** | [Task_4_Sentiment_Analysis](./Task_4_Sentiment_Analysis/) |
 
 ---
@@ -74,6 +90,22 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 - **Decision Boundaries:** 2D decision landscapes projected via PCA capturing **95.81%** of total dataset variance.
 
 👉 **For complete methodology, figures, and classification reports, see [Task 1 README](./Task_1_Classification/README.md).**
+
+---
+
+## 🌟 Task 2 Highlights: Housing Price Prediction (Ridge & Lasso)
+
+- **Dataset:** California Housing Dataset (1990 U.S. Census, 20,640 records, 10 original features, median house value capped at \$500,001).
+- **Leak-Free Preprocessing:** Scikit-Learn `ColumnTransformer` & `Pipeline` combining median imputation, standard scaling, and one-hot encoding fitted exclusively on 80% train split.
+- **Multicollinearity & VIF Analysis:** Diagnosed extreme collinearity between `total_bedrooms` (VIF 50.39) and `households` (VIF 48.38); explained mathematical superiority of Ridge ($L_2$) conditioning $(X^TX + \alpha I)^{-1}$ and Lasso ($L_1$) coordinate sparsity.
+- **Feature Engineering:** Derived structural ratios (`bedrooms_per_room`, `rooms_per_household`, `population_per_household`) and interaction feature `income_per_room` using numerically safe division ($\epsilon = 10^{-6}$).
+- **Benchmark Results (20% Holdout Test):**
+  - **Ridge Regression ($\alpha=1.0$):** **Champion CV RMSE: \$67,840.09**, Test RMSE: **\$69,096.46**, Test MAE: **\$49,614.74**, $R^2$: **0.6357** (Shrank sparse category `ocean_proximity_ISLAND` coefficient by >20%).
+  - **OLS Regression:** Test RMSE: **\$69,086.96**, Test MAE: **\$49,606.59**, $R^2$: **0.6358**.
+  - **Lasso Regression ($\alpha=1.0$):** Test RMSE: **\$69,088.18**, Test MAE: **\$49,607.68**, $R^2$: **0.6357**.
+- **Residual Diagnostics:** Mean residual bias of **+\$48.06** (practically zero), symmetric Gaussian error curve, homoscedastic error bounds, and documented the \$500,001 artificial ceiling cap effect.
+
+👉 **For complete methodology, figures, and regression reports, see [Task 2 README](./Task_2_Housing_Price_Prediction/README.md).**
 
 ---
 
@@ -105,8 +137,11 @@ pip install -r requirements.txt
 # Execute Task 1 automated pipeline script
 python Task_1_Classification/generate_pipeline.py
 
+# Execute Task 2 visualization and benchmark script
+python Task_2_Housing_Price_Prediction/generate_visualizations.py
+
 # Launch Jupyter Notebook
-jupyter notebook Task_1_Classification/notebooks/classification.ipynb
+jupyter notebook Task_2_Housing_Price_Prediction/notebooks/housing_price_prediction.ipynb
 ```
 
 ---
