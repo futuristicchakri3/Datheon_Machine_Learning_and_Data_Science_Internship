@@ -81,8 +81,24 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 │   ├── requirements.txt                       # Task-specific dependencies
 │   └── README.md                              # Dedicated Task 3 documentation
 │
-├── Task_4_Sentiment_Analysis/                 # [PENDING / PLANNED]
-│   └── .gitkeep                               # Reserved for Task 4 implementation
+├── Task_4_Sentiment_Analysis/                 # [COMPLETED]
+│   ├── dataset/
+│   │   └── sentiment_reviews.csv              # Official 10-record supplied review dataset
+│   ├── notebooks/
+│   │   └── sentiment_classification.ipynb     # Fully executed 26-section NLP classification notebook
+│   ├── images/                                # 6 publication-grade NLP visualizations
+│   │   ├── sentiment_distribution.png
+│   │   ├── review_length_distribution.png
+│   │   ├── word_frequency.png
+│   │   ├── confusion_matrix_naive_bayes.png
+│   │   ├── confusion_matrix_logistic_regression.png
+│   │   └── model_comparison.png
+│   ├── src/
+│   │   └── text_preprocessing.py              # Modular NLP pipeline, NLTK & scikit-learn transformer
+│   ├── generate_visualizations.py             # Benchmark & visualization generator script
+│   ├── build_notebook.py                      # Automated notebook builder & execution runner
+│   ├── requirements.txt                       # Task-specific dependencies
+│   └── README.md                              # Dedicated Task 4 documentation
 │
 ├── requirements.txt                           # Project-wide dependencies
 ├── README.md                                  # Root repository overview
@@ -98,7 +114,7 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 | **Task 1** | **Multi-Class Benchmark Classification Pipeline** | Scikit-Learn Pipelines, StandardScaler, Logistic Regression, Decision Tree Classifier, Confusion Matrices, PCA 2D Visualization | **✅ Completed** | [Task_1_Classification](./Task_1_Classification/) |
 | **Task 2** | **Real Estate Housing Price Prediction** | Ridge & Lasso Regression, L1/L2 Regularization, Multicollinearity (VIF), Feature Engineering, Residual Diagnostics | **✅ Completed** | [Task_2_Housing_Price_Prediction](./Task_2_Housing_Price_Prediction/) |
 | **Task 3** | **Predictive Customer Churn Classification** | Random Forest, XGBoost, Class Imbalance Handling (SMOTE & Class Weights), ROC-AUC Optimization, Feature Importance | **✅ Completed** | [Task_3_Customer_Churn_Classification](./Task_3_Customer_Churn_Classification/) |
-| **Task 4** | **NLP Sentiment Classification on Customer Reviews** | TF-IDF Vectorization, Text Preprocessing, Sentiment Analysis Classifiers | **⏳ Pending** | [Task_4_Sentiment_Analysis](./Task_4_Sentiment_Analysis/) |
+| **Task 4** | **NLP Sentiment Classification on Customer Reviews** | TF-IDF Vectorization, Negation-Preserving NLP Pipeline, Multinomial Naive Bayes, Logistic Regression, Custom Predictor | **✅ Completed** | [Task_4_Sentiment_Analysis](./Task_4_Sentiment_Analysis/) |
 
 ---
 
@@ -146,6 +162,22 @@ Datheon_Machine_Learning_and_Data_Science_Internship/
 
 ---
 
+## 🌟 Task 4 Highlights: NLP Sentiment Classification on Customer Reviews (TF-IDF)
+
+- **Dataset:** Authentic supplied customer review dataset (`sentiment_reviews.csv` - 10 records: 5 Positive, 4 Negative, 1 Neutral).
+- **Neutral Record Isolation:** Isolated `Review ID 3` (*"Average performance..."*) into a documented auditing subset to adhere strictly to binary positive/negative classification.
+- **Negation-Preserving NLP Pipeline:** Integrated BeautifulSoup HTML stripping, case normalization, non-alphanumeric punctuation removal, NLTK tokenization, context-aware Penn Treebank POS-tagged WordNet lemmatization, and stopword filtering while strictly safeguarding polarity-altering negation tokens (*not*, *no*, *never*, *cannot*).
+- **TF-IDF Feature Representation:** Extracted 113 unique n-gram features using `TfidfVectorizer(max_features=5000, ngram_range=(1, 2), min_df=1)` with 89.28% sparsity.
+- **Model Development & Benchmark:**
+  - **Multinomial Naive Bayes ($\alpha=1.0$):** **1.000 In-Sample Accuracy**, **1.000 F1-Score**; demonstrated out-of-vocabulary handling in LOOCV.
+  - **Logistic Regression ($L_2$ Regularization):** **1.000 In-Sample Accuracy**, **1.000 F1-Score**.
+- **Interactive Sentiment Function:** Deployed production-grade `predict_sentiment(text)` function returning predicted polarity, class confidence scores, and input validation handling.
+- **Critical Dataset Size Notice:** Explicitly documented that the 10-record corpus is an instructional NLP demonstration rather than a real-world generalization benchmark.
+
+👉 **For complete methodology, figures, and NLP diagnostic reports, see [Task 4 README](./Task_4_Sentiment_Analysis/README.md).**
+
+---
+
 ## ⚙️ Environment Setup & Installation
 
 ### 1. Prerequisites
@@ -180,8 +212,11 @@ python Task_2_Housing_Price_Prediction/generate_visualizations.py
 # Execute Task 3 visualization and benchmark script
 python Task_3_Customer_Churn_Classification/generate_visualizations.py
 
+# Execute Task 4 visualization and benchmark script
+python Task_4_Sentiment_Analysis/generate_visualizations.py
+
 # Launch Jupyter Notebooks
-jupyter notebook Task_3_Customer_Churn_Classification/notebooks/customer_churn_prediction.ipynb
+jupyter notebook Task_4_Sentiment_Analysis/notebooks/sentiment_classification.ipynb
 ```
 
 ---
